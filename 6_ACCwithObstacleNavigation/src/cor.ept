@@ -1,0 +1,25 @@
+node frontDistanceToSpeed (frontDistance: int ) returns (speed :int);
+let
+    speed=if frontDistance=2 then 3
+          else if frontDistance=1 then 2
+          else 0;
+tel
+
+
+node acc(frontDistance,leftDistance : int; leftOut,rightOut,centreOut : bool) returns (wheelLeft,wheelRight : int)
+var mode:int;
+let
+
+     present
+      | centreOut=true do wheelLeft= if(centreOut = false) then frontDistanceToSpeed(frontDistance)
+                else if(centreOut = true and leftOut =true and rightOut=true) then 0
+                else if leftOut=true then 2
+                else if rightOut=true then 1  else 0;
+
+        wheelRight=if(centreOut = false) then frontDistanceToSpeed(frontDistance)
+                else if(centreOut = true and leftOut =true and rightOut=true) then 0
+                else if leftOut=true then 1
+                else if rightOut=true then 2  else 0;
+
+      end
+tel

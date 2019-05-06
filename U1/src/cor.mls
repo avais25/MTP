@@ -1,0 +1,38 @@
+node acc(blocked : bool; leftOut : bool; rightOut : bool; centreOut : bool)
+returns (wheelLeft : int; wheelRight : int)
+var v : bool; v_1 : bool; v_2 : bool; v_3 : bool; v_4 : bool; v_5 : bool;
+    v_6 : bool; v_7 : bool; v_8 : bool; v_9 : int; v_10 : int; v_11 : int;
+    v_12 : int; v_13 : bool; v_14 : bool; v_15 : bool; v_16 : bool;
+    v_17 : bool; v_18 : bool; v_19 : bool; v_20 : bool; v_21 : bool;
+    v_22 : int; v_23 : int; v_24 : int; v_25 : int;
+let
+  wheelRight = if v_13 then 0 else v_25;
+  v_25 = if v_14 then 3 else v_24;
+  v_24 = if v_19 then 0 else v_23;
+  v_23 = if v_20 then 2 else v_22;
+  v_22 = if v_21 then 1 else 0;
+  v_21 = (leftOut = true);
+  v_20 = (rightOut = true);
+  v_19 = (v_17 & v_18);
+  v_18 = (rightOut = true);
+  v_17 = (v_15 & v_16);
+  v_16 = (leftOut = true);
+  v_15 = (centreOut = true);
+  v_14 = (centreOut = false);
+  v_13 = (blocked = true);
+  wheelLeft = if v then 0 else v_12;
+  v_12 = if v_1 then 3 else v_11;
+  v_11 = if v_6 then 0 else v_10;
+  v_10 = if v_7 then 1 else v_9;
+  v_9 = if v_8 then 2 else 0;
+  v_8 = (leftOut = true);
+  v_7 = (rightOut = true);
+  v_6 = (v_4 & v_5);
+  v_5 = (rightOut = true);
+  v_4 = (v_2 & v_3);
+  v_3 = (leftOut = true);
+  v_2 = (centreOut = true);
+  v_1 = (centreOut = false);
+  v = (blocked = true)
+tel
+

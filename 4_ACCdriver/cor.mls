@@ -1,0 +1,30 @@
+node distanceToSpeed(distance : int) returns (speed : int)
+var v : bool; v_1 : bool; v_2 : int;
+let
+  speed = if v then 3 else v_2;
+  v_2 = if v_1 then 2 else 0;
+  v_1 = (distance = 1);
+  v = (distance = 2)
+tel
+
+node acc(distance : int; leftOut : bool; rightOut : bool; centreOut : bool)
+returns (wheelLeft : int; wheelRight : int)
+var v : bool; v_3 : int; v_4 : bool; v_5 : bool; v_6 : int; v_7 : int;
+    v_8 : bool; v_9 : int; v_10 : bool; v_11 : bool; v_12 : int; v_13 : int;
+let
+  wheelRight = if v_8 then v_9 else v_13;
+  v_13 = if v_10 then 1 else v_12;
+  v_12 = if v_11 then 3 else 0;
+  v_11 = (rightOut = true);
+  v_10 = (leftOut = true);
+  v_9 = distanceToSpeed(distance);
+  v_8 = (centreOut = false);
+  wheelLeft = if v then v_3 else v_7;
+  v_7 = if v_4 then 3 else v_6;
+  v_6 = if v_5 then 1 else 0;
+  v_5 = (rightOut = true);
+  v_4 = (leftOut = true);
+  v_3 = distanceToSpeed(distance);
+  v = (centreOut = false)
+tel
+

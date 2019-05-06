@@ -1,0 +1,45 @@
+node distanceToSpeed(distance : int) returns (speed : int)
+var v : bool; v_1 : bool; v_2 : int;
+let
+  speed = if v then 3 else v_2;
+  v_2 = if v_1 then 2 else 0;
+  v_1 = (distance = 1);
+  v = (distance = 2)
+tel
+
+node acc(distance : int; leftOut : bool; rightOut : bool; centreOut : bool)
+returns (wheelLeft : int; wheelRight : int)
+var v : bool; v_3 : int; v_4 : bool; v_5 : bool; v_6 : bool; v_7 : bool;
+    v_8 : bool; v_9 : bool; v_10 : bool; v_11 : int; v_12 : int; v_13 : int;
+    v_14 : bool; v_15 : int; v_16 : bool; v_17 : bool; v_18 : bool;
+    v_19 : bool; v_20 : bool; v_21 : bool; v_22 : bool; v_23 : int;
+    v_24 : int; v_25 : int;
+let
+  wheelRight = if v_14 then v_15 else v_25;
+  v_25 = if v_20 then 0 else v_24;
+  v_24 = if v_21 then 1 else v_23;
+  v_23 = if v_22 then 2 else 0;
+  v_22 = (rightOut = true);
+  v_21 = (leftOut = true);
+  v_20 = (v_18 & v_19);
+  v_19 = (rightOut = true);
+  v_18 = (v_16 & v_17);
+  v_17 = (leftOut = true);
+  v_16 = (centreOut = true);
+  v_15 = distanceToSpeed(distance);
+  v_14 = (centreOut = false);
+  wheelLeft = if v then v_3 else v_13;
+  v_13 = if v_8 then 0 else v_12;
+  v_12 = if v_9 then 2 else v_11;
+  v_11 = if v_10 then 1 else 0;
+  v_10 = (rightOut = true);
+  v_9 = (leftOut = true);
+  v_8 = (v_6 & v_7);
+  v_7 = (rightOut = true);
+  v_6 = (v_4 & v_5);
+  v_5 = (leftOut = true);
+  v_4 = (centreOut = true);
+  v_3 = distanceToSpeed(distance);
+  v = (centreOut = false)
+tel
+
