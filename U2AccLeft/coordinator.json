@@ -1,0 +1,43 @@
+{
+    "sensor" : [
+            {"name" : "Left_white_line", "type" : "float" },
+            {"name" : "Center_white_line", "type" : "float" },
+            {"name" : "Right_white_line", "type" : "float" },
+            {"name" : "Front_Sharp_Sensor", "type" : "float" }
+        ],
+
+    "actuator" : [
+        {"name" : "left_wheel", "type" : "float" , "init": "0"},
+        {"name" : "right_wheel", "type" : "float" , "init": "0"}
+        ],
+      
+    "input" : [
+        {"name" : "i1", "type" : "float" },
+        {"name" : "i2", "type" : "float" },
+        {"name" : "i3", "type" : "float" },
+        {"name" : "i4", "type" : "float" }
+        ],
+
+    "output" : [
+        {"name" : "left_wheel", "type" : "float" , "init": "0"},
+        {"name" : "right_wheel", "type" : "float" , "init": "0"}
+        ],
+    
+    "private" : [],
+
+    "task" : [
+        {"name" : "LW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
+        {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+        ],
+
+    "driver" : [
+            {"name" : "Lw", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
+            {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+            ],
+    
+    "mode" : [
+        {"name" : "Lw", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
+        {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+        ]
+     
+}
