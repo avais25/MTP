@@ -1,0 +1,37 @@
+sensor
+    Left_white_line float
+    Center_white_line float
+    Right_white_line float
+    Front_Sharp_Sensor float
+
+actuator
+    left_wheel int init 0
+    right_wheel int init 0
+
+input
+    i1 float
+    i2 float
+
+output
+    o1 float init 0
+    o1 float init 0
+
+private
+    //defining type and initial values of all the task
+
+
+task
+    LW input i1 output o1 private null
+    RW input i2 output o2 private null
+
+
+driver
+    //will be needing driver function explicitly
+    d1 source xx guard xx destination xx function xx
+
+mode m1 period 6 ports 
+// single mode
+    frequency 1 invoke t1 driver xx
+    frequency 1 invoke t2 driver xx
+    frequency 1 update d4    
+//no mode switch
