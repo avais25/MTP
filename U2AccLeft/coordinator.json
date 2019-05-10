@@ -15,7 +15,11 @@
         {"name" : "i1", "type" : "float" },
         {"name" : "i2", "type" : "float" },
         {"name" : "i3", "type" : "float" },
-        {"name" : "i4", "type" : "float" }
+        {"name" : "i4", "type" : "float" },
+        {"name" : "i5", "type" : "float" },
+        {"name" : "i6", "type" : "float" },
+        {"name" : "i7", "type" : "float" },
+        {"name" : "i8", "type" : "float" }
         ],
 
     "output" : [
@@ -38,7 +42,7 @@
             ],
     
     "mode" : [
-        {"name" : "m1", "period" : "6" , "ports": ["o1"], "definition":[
+        {"name" : "m1", "period" : "6" , "ports": ["o1","o2"], "definition":[
             {"frequency": "1", "task": "LW", "driver": "d1"},
             {"frequency": "1", "task": "RW", "driver": "d1"},
             {"frequency": "1", "update": "d5"},
