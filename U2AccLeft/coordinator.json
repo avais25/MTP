@@ -19,25 +19,31 @@
         ],
 
     "output" : [
-        {"name" : "left_wheel", "type" : "float" , "init": "0"},
-        {"name" : "right_wheel", "type" : "float" , "init": "0"}
+        {"name" : "o1", "type" : "float" , "init": "0"},
+        {"name" : "o2", "type" : "float" , "init": "0"}
         ],
     
     "private" : [],
 
     "task" : [
         {"name" : "LW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
-        {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+        {"name" : "RW", "input" : ["i5","i6","i7","i8"] , "output": ["o2"], "private":[] }
         ],
 
     "driver" : [
-            {"name" : "Lw", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
-            {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+            {"name" : "d1", "input" : ["Left_white_line","Center_white_line","Right_white_line","Front_Sharp_Sensor"] , 
+            "output": ["i1","i5","i2","i6","i3","i7","i4","i8"], "function":"h1", "guard": "1" },
+            {"name" : "d5", "input" : ["o1"] , "output": ["left_wheel"], "function":"h5", "guard": "1" },
+            {"name" : "d6", "input" : ["o2"] , "output": ["right_wheel"], "function":"h6", "guard": "1" }
             ],
     
     "mode" : [
-        {"name" : "Lw", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
-        {"name" : "RW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] }
+        {"name" : "m1", "period" : "6" , "ports": ["o1"], "definition":[
+            {"frequency": "1", "task": "LW", "driver": "d1"},
+            {"frequency": "1", "task": "RW", "driver": "d1"},
+            {"frequency": "1", "update": "d5"},
+            {"frequency": "1", "update": "d6"}
+        ]}
         ]
      
 }

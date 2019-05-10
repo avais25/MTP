@@ -5,12 +5,14 @@ sensor
     Front_Sharp_Sensor float
 
 actuator
-    left_wheel int init 0
-    right_wheel int init 0
+    left_wheel flaot init 0
+    right_wheel flaot init 0
 
 input
     i1 float
     i2 float
+    i3 float
+    i4 float
 
 output
     o1 float init 0
@@ -21,8 +23,8 @@ private
 
 
 task
-    LW input i1 output o1 private null
-    RW input i2 output o2 private null
+    LW input i1,i2,i3,i4 output o1 private null
+    RW input i1,i2,i3,i4 output o2 private null
 
 
 driver
