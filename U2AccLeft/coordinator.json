@@ -36,7 +36,7 @@
 
     "driver" : [
             {"name" : "d1", "input" : ["Left_white_line","Center_white_line","Right_white_line","Front_Sharp_Sensor"] , 
-            "output": ["i1","i5","i2","i6","i3","i7","i4","i8"], "function":"h1", "guard": "1" },
+            "output": ["i1","i5","i2","i6","i3","i7","i4","i8"], "function":"h1", "guard": "1" , "wcet":"500" },
             {"name" : "d5", "input" : ["o1"] , "output": ["left_wheel"], "function":"h5", "guard": "1" },
             {"name" : "d6", "input" : ["o2"] , "output": ["right_wheel"], "function":"h6", "guard": "1" }
             ],
