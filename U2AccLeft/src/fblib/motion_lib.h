@@ -24,7 +24,7 @@ void timer5_init()
 	OCR5BH = 0x00;	//Output compare register high value for Right Motor
 	OCR5CH = 0x00;	//Higher 8 bits are not required for velocity control
 	
-    OCR5AL = 0xFF;	//Output compare register low value for Left Motor
+  OCR5AL = 0xFF;	//Output compare register low value for Left Motor
 	OCR5BL = 0xFF;	//Output compare register low value for Right Motor
 	OCR5CL = 0xFF;	//Output compare register low value for channel C
 

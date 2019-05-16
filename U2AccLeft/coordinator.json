@@ -12,14 +12,14 @@
         ],
       
     "input" : [
-        {"name" : "i1", "type" : "float" },
-        {"name" : "i2", "type" : "float" },
-        {"name" : "i3", "type" : "float" },
-        {"name" : "i4", "type" : "float" },
-        {"name" : "i5", "type" : "float" },
-        {"name" : "i6", "type" : "float" },
-        {"name" : "i7", "type" : "float" },
-        {"name" : "i8", "type" : "float" }
+        {"name" : "blocked", "type" : "float" },
+        {"name" : "leftOut", "type" : "float" },
+        {"name" : "rightOut", "type" : "float" },
+        {"name" : "centreOut", "type" : "float" },
+        {"name" : "blocked2", "type" : "float" },
+        {"name" : "leftOut2", "type" : "float" },
+        {"name" : "rightOut2", "type" : "float" },
+        {"name" : "centreOut2", "type" : "float" }
         ],
 
     "output" : [
@@ -30,23 +30,23 @@
     "private" : [],
 
     "task" : [
-        {"name" : "LW", "input" : ["i1","i2","i3","i4"] , "output": ["o1"], "private":[] },
-        {"name" : "RW", "input" : ["i5","i6","i7","i8"] , "output": ["o2"], "private":[] }
+        {"name" : "LW", "input" : ["blocked","leftOut","rightOut","centreOut"] , "output": ["o1"], "private":[], "wcet":"50" },
+        {"name" : "RW", "input" : ["blocked2","leftOut2","rightOut2","centreOut2"] , "output": ["o2"], "private":[], "wcet":"50" }
         ],
 
     "driver" : [
             {"name" : "d1", "input" : ["Left_white_line","Center_white_line","Right_white_line","Front_Sharp_Sensor"] , 
-            "output": ["i1","i5","i2","i6","i3","i7","i4","i8"], "function":"h1", "guard": "1" , "wcet":"500" },
-            {"name" : "d5", "input" : ["o1"] , "output": ["left_wheel"], "function":"h5", "guard": "1" },
-            {"name" : "d6", "input" : ["o2"] , "output": ["right_wheel"], "function":"h6", "guard": "1" }
+            "output": ["blocked","leftOut","rightOut","centreOut"], "function":"inputDriver", "guard": "1" , "wcet":"500" },
+            {"name" : "d2", "input" : ["blocked","leftOut","rightOut","centreOut"] , 
+            "output": ["blocked2","leftOut2","rightOut2","centreOut2"], "function":"inputDriver2", "guard": "1" , "wcet":"50"},
+            {"name" : "act", "input" : ["o1","o2"] , "output": ["wheels"], "function":"h6", "guard": "1", "wcet":"100" }
             ],
     
     "mode" : [
-        {"name" : "m1", "period" : "6" , "ports": ["o1","o2"], "definition":[
+        {"name" : "m1", "period" : "750" , "ports": ["o1","o2"], "definition":[
             {"frequency": "1", "task": "LW", "driver": "d1"},
             {"frequency": "1", "task": "RW", "driver": "d1"},
-            {"frequency": "1", "update": "d5"},
-            {"frequency": "1", "update": "d6"}
+            {"frequency": "1", "update": "act"}
         ]}
         ]
      

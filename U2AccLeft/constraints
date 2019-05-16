@@ -1,0 +1,15 @@
+Timing Constraints
+
+LW<750
+RW<750
+d1<650
+d2<600
+act<100
+
+Ordering Constraints
+
+act<d1
+act<d2
+d2<d1
+d2<LW
+d2<RW
