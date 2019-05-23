@@ -1,4 +1,5 @@
 // #define F_CPU 14745600
+// #define F_CPU 14.7456E6
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
