@@ -1,58 +1,74 @@
+#define F_CPU 14745600
 #include <time.h>
 #include "fblib/firebird.h"
 #include "cor_c/cor.h"
 void inputDriver(int *blocked,int *leftOut,int *rightOut,int *centreOut);
-void outputDriver(Cor__acc_out *);
-int getSpeed(int);
+unsigned long micros();
+
+unsigned long timer0_micros=0;
+unsigned long timer0_fract=0;
 
 int main(int argc, char  *argv[]) {
 
 Cor__acc_out out;
 
-init_devices();
+  init_devices();
+  TCCR0A = 0;
+  TCCR0B = (1 << CS00);
+  TIMSK0 = (1 << TOIE0);
+
+
 
   while (1) {
+    unsigned long a,b,c;
 
-
-      int blocked, leftOut, rightOut, centreOut;
-
-      inputDriver(&blocked,&leftOut,&rightOut,&centreOut);
-
-      Cor__acc_step(blocked,leftOut,rightOut,centreOut, &out);
-      //lcd_print(2, 1, centreOut, 3);
-      outputDriver(&out);
-
+    a=micros();
+    _delay_ms (1000);
+    b=micros();
+    c=(b-a)%1000;
+    lcd_print(1, 1, c, 5);
 
   }
-
   return 0;
 }
 
+SIGNAL(TIMER0_OVF_vect)
+{
+    unsigned long m = timer0_micros;
+    unsigned long f = timer0_fract;
+ 
+    m += 17;
+    f += 3612;
+    if (f >= 10000) {
+        f -= 10000;
+        m += 1;
+    }
+    timer0_fract = f;
+    timer0_micros = m;
+}
 
+    
+unsigned long micros()
+{
+    unsigned long m;
+    cli();
+    m = timer0_micros;
+    sei();
+    return m;
+}
 
 void inputDriver(int *blocked,int *leftOut,int *rightOut,int *centreOut) {
 
-  time_t start, end;
-  
-  int32_t cpu_time_used;
-
-
-  start = time(NULL);
-  
   unsigned char Left_white_line = ADC_Conversion(3);	//Getting data of Left WL Sensor
   unsigned char Center_white_line = ADC_Conversion(2);	//Getting data of Center WL Sensor
   unsigned char Right_white_line = ADC_Conversion(1);	//Getting data of Right WL Sensor
 
   unsigned char Front_Sharp_Sensor = ADC_Conversion(11);
-  _delay_ms (2000);
+  _delay_ms (1000);
 
-  end = time(NULL);
-
-  cpu_time_used = end-start;
   // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 
-  lcd_print(2, 1, end, 5);
-
+  lcd_print(2, 1, F_CPU/1000, 5);
 
   //unsigned char Front_IR_Sensor = ADC_Conversion(6);
 
@@ -84,36 +100,4 @@ void inputDriver(int *blocked,int *leftOut,int *rightOut,int *centreOut) {
   *centreOut=1;
   else
   *centreOut=0;
-}
-
-
-void outputDriver(Cor__acc_out *out) {
-    int left=getSpeed(out->wheelLeft);
-    int right=getSpeed(out->wheelRight);
-
-    //lcd_print(2, 1, left, 3);
-
-    //lcd_print(2, 4, right, 3);
-
-
-    forward();
-
-    velocity(left, right);
-}
-
-
-int getSpeed(int s)
-{
-  switch (s) {
-    case 0:
-    return 0;
-    case 1:
-    return 50;
-    case 2:
-    return 130;
-    case 3:
-    return 150;
-    default:
-    return 0;
-  }
 }
