@@ -1,4 +1,4 @@
-#define F_CPU 14745600
+// #define F_CPU 14745600
 #include <time.h>
 #include "fblib/firebird.h"
 #include "cor_c/cor.h"
@@ -14,9 +14,9 @@ Cor__acc_out out;
 
   init_devices();
   TCCR0A = 0;
+  
   TCCR0B = (1 << CS00);
   TIMSK0 = (1 << TOIE0);
-
 
 
   while (1) {
@@ -25,18 +25,18 @@ Cor__acc_out out;
     a=micros();
     _delay_ms (1000);
     b=micros();
-    c=(b-a)%1000;
+    c=(b-a)/1000;
     lcd_print(1, 1, c, 5);
 
   }
   return 0;
 }
 
-SIGNAL(TIMER0_OVF_vect)
+ISR(TIMER0_OVF_vect)
 {
     unsigned long m = timer0_micros;
     unsigned long f = timer0_fract;
- 
+  
     m += 17;
     f += 3612;
     if (f >= 10000) {
