@@ -9,7 +9,7 @@ unsigned long timer0_micros=0;
 unsigned long timer0_fract=0;
 
 int main(int argc, char  *argv[]) {
-
+  TCCR0A = 0;
   TCCR0B = (1 << CS00);    //version micro second
   // TCCR0B = (1 << CS00) | (1 << CS01) ; //version millisec
   TIMSK0 = (1 << TOIE0);
