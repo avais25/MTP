@@ -26,7 +26,7 @@ int main(int argc, char  *argv[]) {
 
     //delay testing
     a=micros();
-    _delay_ms (10);
+    _delay_ms (1);
     b=micros();
     c=(b-a);
     lcd_print(1, 1, c, 5);
@@ -59,7 +59,6 @@ ISR(TIMER0_OVF_vect)
     timer0_fract = f;
     timer0_millis = m;
     timer0_overflow_count++;
-    // TCNT0=0;
 }
 
 // //version micro second
