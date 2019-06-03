@@ -1,4 +1,3 @@
-#include "fblib/firebird.h"
 #include "giotto_input.c"
 
 //ports;
