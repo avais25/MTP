@@ -28,16 +28,16 @@
     ],
 
     "driver" : [
-        {"name" : "d1", "input" : ["o2"] , "output": ["i1"], "function":"h1"  },
-        {"name" : "d2", "input" : ["s1"] , "output": ["i2"], "function":"h2"  },
-        {"name" : "d4", "input" : ["o1"] , "output": ["a"], "function":"h4"  }            
+        {"name" : "d1", "input" : ["o2"] , "output": ["i1"], "function":"h1", "wcet":"0.25"  },
+        {"name" : "d2", "input" : ["s1"] , "output": ["i2"], "function":"h2", "wcet":"1"  },
+        {"name" : "d4", "input" : ["o1"] , "output": ["a"], "function":"h4", "wcet":"1"  }            
     ],
 
     "mode" : [
         {"name" : "m1", "period" : "12" , "ports": ["o1","o2"], "definition":[
-            {"frequency": "2", "task": "t1", "driver": "d1"},
-            {"frequency": "3", "task": "t2", "driver": "d2"},
-            {"frequency": "2", "update": "d4"}
+            {"type": "task", "frequency": "2", "task": "t1", "driver": "d1"},
+            {"type": "task", "frequency": "3", "task": "t2", "driver": "d2"},
+            {"type": "actuator", "frequency": "2", "driver": "d4"}
         ]}
         ]
 }
