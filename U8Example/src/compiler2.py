@@ -24,6 +24,10 @@ inpDict = json.loads(inpJson)
 # constrains specification
 cnx = []
 
+# jitter tolerance
+jitter = int(inpDict["jitter"])
+
+# time period of the mode
 modePeriod = int(inpDict["mode"][0]["period"])
 
 # calculating lcm of all the frequency
@@ -34,7 +38,6 @@ for i in inpDict["mode"][0]["definition"]:
 # Time at which the giotto micro step must execute
 configUpdate = modePeriod/frequencyMax
 
-print(configUpdate)
 
 # finding actuator drivers
 
@@ -44,18 +47,39 @@ actList = []
 for i in inpDict["actuator"]:
     actList.append(i["name"])
 
+# list containing name of all the sensors
+senList = []
+
+for i in inpDict["sensor"]:
+    senList.append(i["name"])
+
 # timing constraints for the actuator
 for i in inpDict["mode"][0]["definition"]:
     if i["type"] == "actuator":
         for j in inpDict["driver"]:
             if j["name"] == i["driver"]:
                 for k in range(int(i["frequency"])):
-                    cnx.append("= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1)) + "\n")
+                    # lower bound
+                    cnx.append(">= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) - jitter) + "\n")
+                    # upper bound
+                    cnx.append("<= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) - float(j["wcet"])) + "\n")
+
+cnx.append("\n")
 
 
-# timing constraints for sensor 
+# timing constraints for sensor
+for i in inpDict["mode"][0]["definition"]:
+    if i["type"] == "sensor":
+        for j in inpDict["driver"]:
+            if j["name"] == i["driver"]:
+                for k in range(int(i["frequency"])):
+                    # lower bound
+                    cnx.append(">= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1)) + "\n")
+                    # upper bound
+                    cnx.append("<= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) + jitter - float(j["wcet"])) + "\n")
+cnx.append("\n")
 
+# precedence constraints
 
 outFile.writelines(cnx)
-# print(actList)
-# finding sensor drivers
+print("Done!")

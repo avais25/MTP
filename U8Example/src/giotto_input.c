@@ -30,7 +30,7 @@ void h1(float o2,float *temp1)
 //read the sensor then execut the driver
 void h2(float *s1,float *temp1)
 {
-    // some sensor read needs to be performed
+    // some sensor read needs to be performed|| read(s1)
     s1=1;
     *temp1=10;
 }
