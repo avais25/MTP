@@ -60,9 +60,9 @@ for i in inpDict["mode"][0]["definition"]:
             if j["name"] == i["driver"]:
                 for k in range(int(i["frequency"])):
                     # lower bound
-                    cnx.append(">= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) - jitter) + "\n")
+                    cnx.append( j["name"] + "_"+ str(k) + " >= " + str((modePeriod/int(i["frequency"]))*(k+1) - jitter) + "\n")
                     # upper bound
-                    cnx.append("<= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) - float(j["wcet"])) + "\n")
+                    cnx.append( j["name"] + "_"+ str(k) + " <= " + str((modePeriod/int(i["frequency"]))*(k+1) - float(j["wcet"])) + "\n")
 
 cnx.append("\n")
 
@@ -74,12 +74,41 @@ for i in inpDict["mode"][0]["definition"]:
             if j["name"] == i["driver"]:
                 for k in range(int(i["frequency"])):
                     # lower bound
-                    cnx.append(">= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1)) + "\n")
+                    cnx.append( j["name"] + "_"+ str(k) + " >= " + str((modePeriod/int(i["frequency"]))*(k+1)) + "\n")
                     # upper bound
-                    cnx.append("<= " + j["name"] + "_"+ str(k) + " "+ str((modePeriod/int(i["frequency"]))*(k+1) + jitter - float(j["wcet"])) + "\n")
+                    cnx.append( j["name"] + "_"+ str(k) + " <= " + str((modePeriod/int(i["frequency"]))*(k+1) + jitter - float(j["wcet"])) + "\n")
 cnx.append("\n")
 
 # precedence constraints
+
+# task-update dependency
+count = 0
+for i in inpDict["task"]:
+    cnx.append( i["name"] + "_" +  str(count) + " < " + i["name"] + "_update_" + str(count) + "\n")
+    count +=1
+
+cnx.append("\n")
+
+# driver dependencies
+for i in inpDict["mode"][0]["definition"]:
+    if i["type"] == "task" or i["type"] == "sensor":
+        for j in range(int(i["frequency"])):
+            cnx.append( i["task"] + "_" + str(j) + " < " + i["driver"] + "_" + str(j) + "\n")
+
+cnx.append("\n")
+
+# task instance ordering constraints
+for i in inpDict["mode"][0]["definition"]:
+    if i["type"] == "task" or i["type"] == "sensor":
+        for j in range(int(i["frequency"])-1):
+            cnx.append( i["task"] + "_" + str(j) + " < " + i["task"] + "_" + str(j+1) + "\n" )
+
+cnx.append("\n")
+
+# actuato-task dependencies
+
+
+
 
 outFile.writelines(cnx)
 print("Done!")
