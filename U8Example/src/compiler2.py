@@ -106,11 +106,47 @@ for i in inpDict["mode"][0]["definition"]:
 cnx.append("\n")
 
 # actuator-task dependencies
+for i in inpDict["mode"][0]["definition"]:
+    if i["type"] == "actuator":
+        # print("Actuator "+i["driver"])
+        for j in inpDict["driver"]:
+            if i["driver"] == j["name"]:
+                for k in j["input"]:
+                    # print("Input "+k)
+                    for l in inpDict["task"]:
+                        if k in l["output"]:
+                            # print("Task "+ l["name"])
+                            for m in inpDict["mode"][0]["definition"]:
+                                if m["type"] != "actuator" and m["task"] == l["name"]:
+                                    # print(l["name"])
+                                    # finding the task's instance
+                                    actPeriod = int(modePeriod/int(i["frequency"]))
+                                    for n in range(int(modePeriod/int(i["frequency"])),modePeriod+1,actPeriod):
+                                        instance = int(n/(modePeriod/int(m["frequency"])))-1
+                                        if(n != modePeriod):
+                                            cnx.append(m["task"] + "_update_" + str(instance) + " < "+ i["driver"] + "_" + str(int(n/actPeriod)-1)+ "\n" )
+                                            cnx.append(m["task"] + "_update_" + str(instance+1) + " > "+ i["driver"] + "_" + str(int(n/actPeriod)-1)+ "\n" )
+                                        else:
+                                            cnx.append(m["task"] + "_update_" + str(instance) + " < "+ i["driver"] + "_" + str(int(n/actPeriod)-1)+ "\n" )
+
+cnx.append("\n")
 
 
 # task-task dependency
 
+for i in inpDict["driver"]:
+    for j in i["input"]:
+        for k in inpDict["task"]:
+            if j in k["output"]:
+            #    print(i["name"]+ "  "+ k["name"])
+               for l in i["output"]:
+                   for m in inpDict["task"]:
+                       if l in m["input"]:
+                           if(k["name"] != m["name"]):
+                               print(i["name"])
 
+
+cnx.append("\n")
 # default constraints
 jobList = []
 # adding drivers with wcet
