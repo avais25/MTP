@@ -105,10 +105,37 @@ for i in inpDict["mode"][0]["definition"]:
 
 cnx.append("\n")
 
-# actuato-task dependencies
+# actuator-task dependencies
 
 
+# task-task dependency
 
 
+# default constraints
+jobList = []
+# adding drivers with wcet
+for i in inpDict["mode"][0]["definition"]:
+    for j in inpDict["driver"]:
+        if j["name"] == i["driver"]:
+            for k in range(int(i["frequency"])):
+                x = ( j["name"] + "_" + str(k) , j["wcet"])
+                jobList.append(x)
+    # adding task with wcet
+    if i["type"] == "task" or i["type"] == "sensor":
+        for j in inpDict["task"]:
+            if j["name"] == i["task"]:
+                for k in range(int(i["frequency"])):
+                    x = ( j["name"] + "_" + str(k) , j["wcet1"])
+                    jobList.append(x)
+                    x = ( j["name"] + "_update_" + str(k) , j["wcet2"])
+                    jobList.append(x)
+
+for i,j in jobList:
+    for p,q in jobList:
+        if(p != i):
+            cnx.append("Or(" + i + " + " + j + " <= " + p + " , " + p+" + "+ q + " <= "+ i+")\n")
+
+cnx.append("\n")
+# print(jobList)
 outFile.writelines(cnx)
 print("Done!")
