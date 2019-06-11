@@ -27,6 +27,9 @@ t1_update_0 < d4_0
 t1_update_1 > d4_0
 t1_update_1 < d4_1
 
+t2_update_0 < t1_1
+t2_update_1 > t1_1
+t2_update_0 > t1_0
 
 Or(d1_0 + 0.25 <= d1_1 , d1_1 + 0.25 <= d1_0)
 Or(d1_0 + 0.25 <= t1_0 , t1_0 + 0.20 <= d1_0)
