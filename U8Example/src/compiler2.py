@@ -81,10 +81,10 @@ for i in inpDict["mode"][0]["definition"]:
                 for k in range(int(i["frequency"])):
                     # lower bound
                     cnx.append(j["name"] + "_" + str(k) + " >= " +
-                               str((modePeriod/int(i["frequency"]))*(k+1)) + "\n")
+                               str((modePeriod/int(i["frequency"]))*(k)) + "\n")
                     # upper bound
                     cnx.append(j["name"] + "_" + str(k) + " <= " + str((modePeriod /
-                                                                        int(i["frequency"]))*(k+1) + jitter - float(j["wcet"])) + "\n")
+                                                                        int(i["frequency"]))*(k) + jitter - float(j["wcet"])) + "\n")
 cnx.append("\n")
 
 # precedence constraints
@@ -181,10 +181,9 @@ for i in inpDict["driver"]:
                                 cnx.append(k["name"] + "_update_0 > " + m["name"] + "_0\n")
 
                                     
-                                            
-
-
 cnx.append("\n")
+
+
 # default constraints
 jobList = []
 # adding drivers with wcet
@@ -211,6 +210,13 @@ for i, j in jobList:
         if(p != i):
             cnx.append("Or(" + i + " + " + j + " <= " + p +
                        " , " + p+" + " + q + " <= " + i+")\n")
+
+cnx.append("\n")
+
+for i, j in jobList:
+    cnx.append(i+ " >= 0\n")
+    cnx.append(i+ " <= "+ str(modePeriod) + "\n")
+    
 
 # print(jobList)
 outFile.writelines(cnx)
