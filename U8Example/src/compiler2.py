@@ -16,6 +16,7 @@ def lcm(x, y):
 # opening the flie
 inpFile = open("giotto.json", "r")
 outFile = open("constraints_specification.txt", "w")
+outFile2 = open("job_list.txt", "w")
 
 # reading giotto.json as dict
 inpJson = inpFile.read()
@@ -23,6 +24,9 @@ inpDict = json.loads(inpJson)
 
 # constrains specification
 cnx = []
+
+# job list
+js = []
 
 # jitter tolerance
 jitter = int(inpDict["jitter"])
@@ -201,12 +205,14 @@ for i in inpDict["mode"][0]["definition"]:
                     jobList.append(x)
 
 for i, j in jobList:
+    # writing job_list file
+    js.append(i+ "\n")
     for p, q in jobList:
         if(p != i):
             cnx.append("Or(" + i + " + " + j + " <= " + p +
                        " , " + p+" + " + q + " <= " + i+")\n")
 
-cnx.append("\n")
 # print(jobList)
 outFile.writelines(cnx)
+outFile2.writelines(js)
 print("Done!")
