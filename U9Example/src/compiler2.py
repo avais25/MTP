@@ -134,6 +134,14 @@ for i in inpDict["mode"][0]["definition"]:
         for j in range(int(i["frequency"])-1):
             cnx.append(i["task"] + "_" + str(j) + " < " +
                        i["task"] + "_" + str(j+1) + "\n")
+            cnx.append(i["task"] + "_update_" + str(j) + " < " +
+                       i["task"] + "_update_" + str(j+1) + "\n")
+            cnx.append(i["driver"] + "_" + str(j) + " < " +
+                       i["driver"] + "_" + str(j+1) + "\n")
+    if i["type"] == "actuator":
+        for j in range(int(i["frequency"])-1):
+            cnx.append(i["driver"] + "_" + str(j) + " < " +
+                       i["driver"] + "_" + str(j+1) + "\n")
 
 cnx.append("\n")
 
