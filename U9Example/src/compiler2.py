@@ -58,7 +58,7 @@ for i in inpDict["sensor"]:
     senList.append(i["name"])
 
 # Dictionary containing all  the task and its wcet
-wcetDict={}
+wcetDict = {}
 
 for i in inpDict["mode"][0]["definition"]:
     # adding drivers with wcet
@@ -66,30 +66,29 @@ for i in inpDict["mode"][0]["definition"]:
         if j["name"] == i["driver"]:
             for k in range(int(i["frequency"])):
                 x = j["name"] + "_" + str(k)
-                wcetDict.update({x : float(j["wcet"])})
+                wcetDict.update({x: float(j["wcet"])})
     # adding task with wcet
     if i["type"] == "task" or i["type"] == "sensor":
         for j in inpDict["task"]:
             if j["name"] == i["task"]:
                 for k in range(int(i["frequency"])):
                     x = j["name"] + "_" + str(k)
-                    wcetDict.update({x : float(j["wcet1"])})
+                    wcetDict.update({x: float(j["wcet1"])})
                     x = j["name"] + "_update_" + str(k)
-                    wcetDict.update({x : float(j["wcet2"])})
+                    wcetDict.update({x: float(j["wcet2"])})
 
 
 # timing constraints for the actuator
 for i in inpDict["mode"][0]["definition"]:
     if i["type"] == "actuator":
-        for j in inpDict["driver"]:
-            if j["name"] == i["driver"]:
-                for k in range(int(i["frequency"])):
-                    # lower bound
-                    cnx.append(j["name"] + "_" + str(k) + " >= " +
-                               str((modePeriod/int(i["frequency"]))*(k+1) - jitter) + "\n")
-                    # upper bound
-                    cnx.append(j["name"] + "_" + str(k) + " <= " + str((modePeriod /
-                                                                        int(i["frequency"]))*(k+1) - float(j["wcet"])) + "\n")
+        for k in range(int(i["frequency"])):
+            temp = i["driver"] + "_" + str(k)
+            # lower bound
+            cnx.append(temp + " >= " +
+                       str((modePeriod/int(i["frequency"]))*(k+1) - jitter) + "\n")
+            # upper bound
+            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " + str((modePeriod /
+                                                                          int(i["frequency"]))*(k+1)) + "\n")
 
 cnx.append("\n")
 
@@ -185,23 +184,28 @@ for i in inpDict["driver"]:
                                 # print(i["name"])
                                 # finding the task instnce
                                 # t1 is the input task  forn the drver, t2 is the output task
-                                t1 = -1  
+                                t1 = -1
                                 t2 = -1
                                 for n in inpDict["mode"][0]["definition"]:
                                     if(n["type"] != "actuator" and n["task"] == k["name"]):
-                                        t1 = int(modePeriod/int(n["frequency"]))
+                                        t1 = int(
+                                            modePeriod/int(n["frequency"]))
                                         # print(t1)
                                     if(n["type"] != "actuator" and n["task"] == m["name"]):
-                                        t2 = int(modePeriod/int(n["frequency"]))
+                                        t2 = int(
+                                            modePeriod/int(n["frequency"]))
                                         # print(t2)
                                 # 1st instance of the task will take the value form previous mode execution
-                                for n in range(t2 , modePeriod , t2):
-                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)-1) + " < " + m["name"] + "_" + str(int(n/t2)) +"\n")
-                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)) + " > " + m["name"] + "_" + str(int(n/t2)) +"\n")
+                                for n in range(t2, modePeriod, t2):
+                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)-1) +
+                                               " < " + m["name"] + "_" + str(int(n/t2)) + "\n")
+                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)) +
+                                               " > " + m["name"] + "_" + str(int(n/t2)) + "\n")
                                 # first execution of these tasks
-                                cnx.append(k["name"] + "_update_0 > " + m["name"] + "_0\n")
+                                cnx.append(
+                                    k["name"] + "_update_0 > " + m["name"] + "_0\n")
 
-                                    
+
 cnx.append("\n")
 
 
@@ -226,7 +230,7 @@ for i in inpDict["mode"][0]["definition"]:
 
 for i, j in jobList:
     # writing job_list file
-    js.append(i+ "\n")
+    js.append(i + "\n")
     for p, q in jobList:
         if(p != i):
             cnx.append("Or(" + i + " + " + j + " <= " + p +
@@ -235,9 +239,9 @@ for i, j in jobList:
 cnx.append("\n")
 
 for i, j in jobList:
-    cnx.append(i+ " >= 0\n")
-    cnx.append(i+ " <= "+ str(modePeriod) + "\n")
-    
+    cnx.append(i + " >= 0\n")
+    cnx.append(i + " <= " + str(modePeriod) + "\n")
+
 
 # print(jobList)
 outFile.writelines(cnx)

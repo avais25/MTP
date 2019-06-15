@@ -1,7 +1,7 @@
 actuation_0 >= 5.0
-actuation_0 <= 5.0
+actuation_0 + 1.0 <= 6.0
 actuation_1 >= 11.0
-actuation_1 <= 11.0
+actuation_1 + 1.0 <= 12.0
 
 input_t2_0 >= 0.0
 input_t2_0 <= 0.5
