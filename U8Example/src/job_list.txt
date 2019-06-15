@@ -1,12 +1,12 @@
-d1_0
-d1_1
+input_t1_0
+input_t1_1
 t1_0
 t1_update_0
 t1_1
 t1_update_1
-d2_0
-d2_1
-d2_2
+input_t2_0
+input_t2_1
+input_t2_2
 t2_0
 t2_update_0
 t2_1
