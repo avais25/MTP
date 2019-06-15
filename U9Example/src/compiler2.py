@@ -93,37 +93,38 @@ for i in inpDict["mode"][0]["definition"]:
 cnx.append("\n")
 
 
-# timing constraints for sensor
+# timing constraints for sensor/ task input
 for i in inpDict["mode"][0]["definition"]:
     if i["type"] == "sensor":
-        for j in inpDict["driver"]:
-            if j["name"] == i["driver"]:
-                for k in range(int(i["frequency"])):
-                    # lower bound
-                    cnx.append(j["name"] + "_" + str(k) + " >= " +
-                               str((modePeriod/int(i["frequency"]))*(k)) + "\n")
-                    # upper bound
-                    cnx.append(j["name"] + "_" + str(k) + " <= " + str((modePeriod /
-                                                                        int(i["frequency"]))*(k) + jitter - float(j["wcet"])) + "\n")
+        for k in range(int(i["frequency"])):
+            temp = i["driver"] + "_" + str(k)
+            # lower bound
+            cnx.append(temp + " >= " +
+                       str((modePeriod/int(i["frequency"]))*(k)) + "\n")
+            # upper bound
+            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " + str((modePeriod /
+                                                                          int(i["frequency"]))*(k) + jitter) + "\n")
 cnx.append("\n")
 
 # precedence constraints
 
 # task-update dependency
-count = 0
-for i in inpDict["task"]:
-    cnx.append(i["name"] + "_" + str(count) + " < " +
-               i["name"] + "_update_" + str(count) + "\n")
-    count += 1
-
-cnx.append("\n")
-
-# driver dependencies
 for i in inpDict["mode"][0]["definition"]:
     if i["type"] == "task" or i["type"] == "sensor":
         for j in range(int(i["frequency"])):
-            cnx.append(i["task"] + "_" + str(j) + " < " +
-                       i["driver"] + "_" + str(j) + "\n")
+            temp = i["task"] + "_" + str(j)
+            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " +
+                       i["task"] + "_update_" + str(j) + "\n")
+
+cnx.append("\n")
+
+# driver dependencies or task input and task constraints
+for i in inpDict["mode"][0]["definition"]:
+    if i["type"] == "task" or i["type"] == "sensor":
+        for j in range(int(i["frequency"])):
+            temp = i["driver"] + "_" + str(j)
+            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " +
+                       i["task"] + "_" + str(j) + "\n")
 
 cnx.append("\n")
 
