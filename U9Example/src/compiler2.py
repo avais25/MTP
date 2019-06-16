@@ -206,13 +206,13 @@ for i in inpDict["driver"]:
                                         # print(t2)
                                 # 1st instance of the task will take the value form previous mode execution
                                 for n in range(t2, modePeriod, t2):
-                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)-1) +
-                                               " < " + m["name"] + "_" + str(int(n/t2)) + "\n")
-                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)) +
-                                               " > " + m["name"] + "_" + str(int(n/t2)) + "\n")
+                                    temp = k["name"] + "_update_" + str(int(n/t1)-1)
+                                    temp2 =  m["name"] + "_" + str(int(n/t2))
+                                    cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " + m["name"] + "_" + str(int(n/t2)) + "\n")
+                                    cnx.append(k["name"] + "_update_" + str(int(n/t1)) +" >= " + temp2 + " + " + str(wcetDict[temp2]) + "\n")
                                 # first execution of these tasks
-                                cnx.append(
-                                    k["name"] + "_update_0 > " + m["name"] + "_0\n")
+                                # cnx.append(k["name"] + "_update_0 > " + m["name"] + "_0\n")
+                                cnx.append(m["name"] + "_0" + " + " + str(wcetDict[m["name"]+"_0"]) + " <= " +k["name"] + "_update_0\n" )
 
 
 cnx.append("\n")
