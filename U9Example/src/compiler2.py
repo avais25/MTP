@@ -165,14 +165,14 @@ for i in inpDict["mode"][0]["definition"]:
                                     for n in range(int(modePeriod/int(i["frequency"])), modePeriod+1, actPeriod):
                                         instance = int(
                                             n/(modePeriod/int(m["frequency"])))-1
+                                        temp = m["task"] + "_update_" + str(instance)
+                                        temp2 = i["driver"] + "_" + str(int(n/actPeriod)-1)
                                         if(n != modePeriod):
+                                            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " + i["driver"] + "_" + str(int(n/actPeriod)-1) + "\n")
                                             cnx.append(m["task"] + "_update_" + str(
-                                                instance) + " < " + i["driver"] + "_" + str(int(n/actPeriod)-1) + "\n")
-                                            cnx.append(m["task"] + "_update_" + str(
-                                                instance+1) + " > " + i["driver"] + "_" + str(int(n/actPeriod)-1) + "\n")
+                                                instance+1) + " >= " + temp2 + " + " + str(wcetDict[temp2]) +  "\n")
                                         else:
-                                            cnx.append(m["task"] + "_update_" + str(
-                                                instance) + " < " + i["driver"] + "_" + str(int(n/actPeriod)-1) + "\n")
+                                            cnx.append(temp + " + " + str(wcetDict[temp]) + " <= " + i["driver"] + "_" + str(int(n/actPeriod)-1) + "\n")
 
 cnx.append("\n")
 

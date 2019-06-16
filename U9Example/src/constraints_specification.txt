@@ -33,9 +33,9 @@ t2_update_1 < t2_update_2
 input_t2_1 < input_t2_2
 actuation_0 < actuation_1
 
-t1_update_0 < actuation_0
-t1_update_1 > actuation_0
-t1_update_1 < actuation_1
+t1_update_0 + 0.05 <= actuation_0
+t1_update_1 >= actuation_0 + 1.0
+t1_update_1 + 0.05 <= actuation_1
 
 t2_update_0 < t1_1
 t2_update_1 > t1_1
