@@ -24,6 +24,7 @@ for x in constraints:
 
 codes.append("print(s.check())\n")
 codes.append("print(s.model())\n")
-codes.append("outFile = open(\"scehule_specification.txt\", \"w\")\n")
+codes.append("outFile = open(\"schedule_specification.txt\", \"w\")\n")
+codes.append("outFile.writelines(str(s.check()) + \"\\n\")\n")
 codes.append("outFile.writelines(str(s.model()))\n")
 outFile.writelines(codes)
