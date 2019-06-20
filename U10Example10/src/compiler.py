@@ -26,7 +26,7 @@ for i in inpDict["input"]:
 
 for i in inpDict["output"]:
     tx.append(i["type"] + " " + i["name"] + "=" + i["init"] + ";\n")
-    tx.append(i["type"] + " t_" + i["name"] + "=" + i["init"] + ";\n")
+    # tx.append(i["type"] + " t_" + i["name"] + "=" + i["init"] + ";\n")
 
 for i in inpDict["private"]:
     tx.append(i["type"] + " " + i["name"] + "=" + i["init"] + ";\n")
@@ -38,16 +38,16 @@ for i in inpDict["task"]:
     for i2 in i["input"]:
         st = st + i2 + ","
     for i2 in i["output"]:
-        st = st + "&t_" + i2 + ","
+        st = st + "&" + i2 + ","
     st = st[:-1]
     st=st+");\n}\n"
     tx.append(st) 
 
-for i in inpDict["task"]:
-    tx.append("\nvoid "+i["name"] + "_update(){\n")
-    for i2 in i["output"]:
-        tx.append(i2+"=t_"+i2+";") 
-    tx.append("\n}\n")
+# for i in inpDict["task"]:
+#     tx.append("\nvoid "+i["name"] + "_update(){\n")
+#     for i2 in i["output"]:
+#         tx.append(i2+"=t_"+i2+";") 
+#     tx.append("\n}\n")
 
 for i in inpDict["driver"]:
     st=""
