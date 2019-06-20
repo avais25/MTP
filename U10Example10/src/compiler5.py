@@ -27,7 +27,9 @@ if(satisfy == "sat\n"):
 
     constraints = inpFile.readlines()
 
-    mainx.append("#include \"fblib/firebird.h\" \n")
+    # mainx.append("#include \"fblib/firebird.h\" \n")
+    # mainx.append("#include \"giotto_input.c\" \n")
+    mainx.append("#include \"giotto_output2.h\" \n")
     mainx.append("volatile unsigned int schedule = 0; \n")
     mainx.append("int main(int argc, char *argv[]) { \n")
     mainx.append("init_devices(); \n")
@@ -36,7 +38,9 @@ if(satisfy == "sat\n"):
     mainx.append("TIMSK4 = (1 << OCIE4A); \n")
     
 
-    
+
+    constraints[-1] += ","
+    # print(constraints[-1])
 
     for i in constraints:
         i=i[1:]
@@ -151,7 +155,7 @@ if(satisfy == "sat\n"):
         mainx.append("OCR4A = " + str(j)+"; \n")
         mainx.append("schedule = " + str(scheduleCount) + ";\n")
         mainx.append("break; \n")
-        scheduleCount += 1;
+        scheduleCount += 1
 
     # the last case
     mainx.append("case " + str(scheduleCount-1)+": \n")

@@ -1,4 +1,4 @@
-#include "giotto_input.c"
+#include "giotto_input.h"
 
 float s1;
 float a=0;

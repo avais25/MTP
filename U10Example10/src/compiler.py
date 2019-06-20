@@ -1,12 +1,12 @@
 import json
 
 # opening the flie
-outFile = open("giotto_output2.c", "w")
+outFile = open("giotto_output2.h", "w")
 inpFile = open("giotto.json", "r")
 
 
-tx = ["#include \"giotto_input.c\"\n\n"]
-
+tx = ["#include \"giotto_input.h\"\n\n"]
+# tx = []
 
 # reading giotto.json as dict
 inpJson = inpFile.read()

@@ -1,11 +1,11 @@
-#include "fblib/firebird.h" 
+#include "giotto_output2.h" 
 volatile unsigned int schedule = 0; 
 int main(int argc, char *argv[]) { 
 init_devices(); 
 TCCR4A = (1 << WGM42); 
 TCCR4B = (1 << CS00) | (1 << CS01); 
 TIMSK4 = (1 << OCIE4A); 
-OCR4A = 215; 
+OCR4A = 169; 
 schedule=1; 
 while(1) { 
 switch (schedule) { 
@@ -15,32 +15,27 @@ break;
 case 1: 
 input_t1();
 t1();
-t1_update();
 schedule = 0;
 break;
 case 2: 
 input_t2();
-input_t1();
 t2();
+input_t1();
 schedule = 0;
 break;
 case 3: 
 input_t2();
-t2_update();
-t1();
+t2();
 schedule = 0;
 break;
 case 4: 
 actuation();
-t1_update();
+t1();
 schedule = 0;
 break;
 case 5: 
 input_t2();
 t2();
-t2_update();
-t2();
-t2_update();
 schedule = 0;
 break;
 case 6: 
@@ -73,7 +68,7 @@ OCR4A = 2864;
 schedule = 6;
 break; 
 case 6: 
-OCR4A = 215; 
+OCR4A = 169; 
 schedule = 1; 
 TCNT4 = 100;
 break; 
