@@ -232,7 +232,7 @@ for i in inpDict["mode"][0]["definition"]:
         for j in inpDict["task"]:
             if j["name"] == i["task"]:
                 for k in range(int(i["frequency"])):
-                    x = (j["name"] + "_" + str(k), j["wcet1"])
+                    x = (j["name"] + "_" + str(k), j["wcet"])
                     jobList.append(x)
                     # x = (j["name"] + "_update_" + str(k), j["wcet2"])
                     # jobList.append(x)

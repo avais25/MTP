@@ -23,8 +23,8 @@
     ],
 
     "task" : [
-        {"name" : "t1", "input" : ["i1"] , "output": ["o1"], "private":["p1"], "function":"f1", "wcet":"0.25", "wcet1":"0.05" },
-        {"name" : "t2", "input" : ["i2"] , "output": ["o2"], "private":["p2"], "function":"f2", "wcet":"1", "wcet1":"0.25"  }
+        {"name" : "t1", "input" : ["i1"] , "output": ["o1"], "private":["p1"], "function":"f1", "wcet":"0.25" },
+        {"name" : "t2", "input" : ["i2"] , "output": ["o2"], "private":["p2"], "function":"f2", "wcet":"1" }
     ],
 
     "driver" : [

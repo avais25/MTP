@@ -6,7 +6,7 @@ init_devices();
 TCCR4A = 0 
 TCCR4B = (1 << CS00) | (1 << CS01); 
 TIMSK4 = (1 << OCIE4A); 
-OCR4A = 169; 
+OCR4A = 215; 
 schedule=1; 
 isr_schedule = 1; 
 while(1) { 
@@ -27,12 +27,12 @@ schedule = 0;
 break;
 case 3: 
 input_t2();
-t2();
 schedule = 0;
 break;
 case 4: 
 actuation();
 t1();
+t2();
 schedule = 0;
 break;
 case 5: 
@@ -75,7 +75,7 @@ schedule = 6;
 isr_schedule = 6;
 break; 
 case 6: 
-OCR4A = 169; 
+OCR4A = 215; 
 schedule = 1; 
 isr_schedule = 1; 
 TCNT4 = 100;
