@@ -3,7 +3,7 @@ volatile unsigned int schedule = 0;
 volatile unsigned int isr_schedule = 0; 
 int main(int argc, char *argv[]) { 
 init_devices(); 
-TCCR4A = (1 << WGM42); 
+TCCR4A = 0 
 TCCR4B = (1 << CS00) | (1 << CS01); 
 TIMSK4 = (1 << OCIE4A); 
 OCR4A = 169; 

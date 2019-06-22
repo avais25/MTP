@@ -34,7 +34,7 @@ if(satisfy == "sat\n"):
     mainx.append("volatile unsigned int isr_schedule = 0; \n")
     mainx.append("int main(int argc, char *argv[]) { \n")
     mainx.append("init_devices(); \n")
-    mainx.append("TCCR4A = (1 << WGM42); \n")
+    mainx.append("TCCR4A = 0 \n")
     mainx.append("TCCR4B = (1 << CS00) | (1 << CS01); \n")
     mainx.append("TIMSK4 = (1 << OCIE4A); \n")
     
@@ -79,8 +79,9 @@ if(satisfy == "sat\n"):
             if i2 == j["driver"] and (j["type"] == "sensor" or j["type"] == "actuator"):
                 interruptDict.update({str(count) : tick(schedule[i])+100})
                 count = count + 1
+                print(i2, schedule[i])
         interruptDict.update({str(count) : tick(float(inpDict["mode"][0]["period"]))+100})
-
+    
     # we need to specify first schdule now
     if interruptDict['0'] == 100:
         # del interruptDict['0']
