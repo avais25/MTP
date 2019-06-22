@@ -31,6 +31,7 @@ if(satisfy == "sat\n"):
     # mainx.append("#include \"giotto_input.c\" \n")
     mainx.append("#include \"giotto_output2.h\" \n")
     mainx.append("volatile unsigned int schedule = 0; \n")
+    mainx.append("volatile unsigned int isr_schedule = 0; \n")
     mainx.append("int main(int argc, char *argv[]) { \n")
     mainx.append("init_devices(); \n")
     mainx.append("TCCR4A = (1 << WGM42); \n")
@@ -90,6 +91,7 @@ if(satisfy == "sat\n"):
     mainx.append("OCR4A = "+str(firstInt)+"; \n")
     
     mainx.append("schedule=1; \n")
+    mainx.append("isr_schedule = 1; \n")
     mainx.append("while(1) { \n")
     mainx.append("switch (schedule) { \n")
     mainx.append("case 0: \n")
@@ -137,7 +139,7 @@ if(satisfy == "sat\n"):
 
     # the ISR CODE
     mainx.append("ISR(TIMER4_COMPA_vect) { \n")
-    mainx.append("switch (OCR4A) { \n")
+    mainx.append("switch (isr_schedule) { \n")
    
     print(interruptDict)
     
@@ -154,6 +156,7 @@ if(satisfy == "sat\n"):
         mainx.append("case " + str(scheduleCount-1)+": \n")
         mainx.append("OCR4A = " + str(j)+"; \n")
         mainx.append("schedule = " + str(scheduleCount) + ";\n")
+        mainx.append("isr_schedule = " + str(scheduleCount) + ";\n")
         mainx.append("break; \n")
         scheduleCount += 1
 
@@ -161,6 +164,7 @@ if(satisfy == "sat\n"):
     mainx.append("case " + str(scheduleCount-1)+": \n")
     mainx.append("OCR4A = " + str(firstInt) + "; \n")
     mainx.append("schedule = 1; \n")
+    mainx.append("isr_schedule = 1; \n")
     mainx.append("TCNT4 = 100;\n")
     mainx.append("break; \n")
     mainx.append("}} \n")
