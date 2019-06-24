@@ -11,7 +11,7 @@ typedef struct Cor__acc_out {
   int wheelRight;
 } Cor__acc_out;
 
-void Cor__acc_step(int blocked, int leftOut, int rightOut, int centreOut,
-                   Cor__acc_out* _out);
+// void Cor__acc_step(int blocked, int leftOut, int rightOut, int centreOut,
+//                    Cor__acc_out* _out);
 
 #endif // COR_H

@@ -13,13 +13,13 @@ float lw=0;
 float rw=0;
 
 void t1(){
-f1(bli,lei,rii,cni,&lw,&rw);
+Cor__acc_step(bli,lei,rii,cni,&lw,&rw);
 }
 
 void input_t1(){
-h1(&bl,&le,&ri,&cn,&bli,&lei,&rii,&cni);
+inputDriver(&bl,&le,&ri,&cn,&bli,&lei,&rii,&cni);
 }
 
 void actuation(){
-h4(lw,rw,&act);
+actDriver(lw,rw,&act);
 }

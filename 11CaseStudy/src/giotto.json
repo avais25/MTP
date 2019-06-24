@@ -26,12 +26,12 @@
     ],
 
     "task" : [
-        {"name" : "t1", "input" : ["bli","lei","rii","cni"] , "output": ["lw","rw"], "function":"f1", "wcet":"0.1" }
+        {"name" : "t1", "input" : ["bli","lei","rii","cni"] , "output": ["lw","rw"], "function":"Cor__acc_step", "wcet":"0.1" }
     ],
 
     "driver" : [
-        {"name" : "input_t1", "input" : ["bl","le","ri","cn"] , "output": ["bli","lei","rii","cni"], "function":"h1", "wcet":"0.300" },
-        {"name" : "actuation", "input" : ["lw","rw"] , "output": ["act"], "function":"h4", "wcet":"0.100" }
+        {"name" : "input_t1", "input" : ["bl","le","ri","cn"] , "output": ["bli","lei","rii","cni"], "function":"inputDriver", "wcet":"0.300" },
+        {"name" : "actuation", "input" : ["lw","rw"] , "output": ["act"], "function":"actDriver", "wcet":"0.100" }
 
     ],
 
