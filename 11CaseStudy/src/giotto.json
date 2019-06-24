@@ -1,0 +1,45 @@
+{
+    "sensor" : [
+        {"name" : "bl" , "type" : "float"},
+        {"name" : "le" , "type" : "float"},
+        {"name" : "ri" , "type" : "float"},
+        {"name" : "cn" , "type" : "float"}
+    ],
+
+    "actuator" : [
+        {"name" : "act" , "type" : "float" , "init" : "0"}
+    ],
+    
+    "input" : [
+            {"name" : "bli" , "type" : "float"},
+            {"name" : "lei" , "type" : "float"},
+            {"name" : "rii" , "type" : "float"},
+            {"name" : "cni" , "type" : "float"}
+    ],
+
+    "output" : [
+        {"name" : "lw", "type" : "float" , "init": "0"},
+        {"name" : "rw", "type" : "float" , "init": "0"}
+    ],
+
+    "private" : [
+    ],
+
+    "task" : [
+        {"name" : "t1", "input" : ["bli","lei","rii","cni"] , "output": ["lw","rw"], "function":"f1", "wcet":"0.1" }
+    ],
+
+    "driver" : [
+        {"name" : "input_t1", "input" : ["bl","le","ri","cn"] , "output": ["bli","lei","rii","cni"], "function":"h1", "wcet":"0.300" },
+        {"name" : "actuation", "input" : ["lw","rw"] , "output": ["act"], "function":"h4", "wcet":"0.100" }
+
+    ],
+
+    "mode" : [
+        {"name" : "m1", "period" : "4" ,  "definition":[
+            {"type": "sensor", "frequency": "2", "task": "t1", "driver": "input_t1"},
+            {"type": "actuator", "frequency": "2", "driver": "actuation"}
+        ]}
+        ],
+    "jitter" : "1"
+}

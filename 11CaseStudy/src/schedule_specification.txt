@@ -1,0 +1,7 @@
+sat
+[actuation_0 = 1,
+ t1_1 = 23/10,
+ input_t1_0 = 0,
+ actuation_1 = 3,
+ input_t1_1 = 2,
+ t1_0 = 3/10]

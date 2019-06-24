@@ -25,10 +25,10 @@ int main(int argc, char  *argv[]) {
    
 
     //delay testing
-    a=micros();
-    _delay_ms (1);
+    a=millis();
+    _delay_ms (100);
     b=micros();
-    c=(b-a);
+    c=(b-a)/1000;
     lcd_print(1, 1, c, 5);
 
     // //lcd print wcet
