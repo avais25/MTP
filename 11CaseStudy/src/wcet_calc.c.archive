@@ -75,6 +75,26 @@ void outputDriver(Cor__acc_out *out) {
     velocity(left, right);
 }
 
+void inputDriver2(float *rightF,float *rightB) {
+
+  *rightF = ADC_Conversion(7);
+print_sensor(1,8,7);
+  
+  *rightB = ADC_Conversion(8);
+print_sensor(2,8,8);
+}
+
+void actDriver2() {
+    if(0 == 0)
+    {
+    buzzer_on();
+    // _delay_ms(1000); //delay
+    // print_sensor(2,1,123);
+    buzzer_off();
+    }
+}
+
+
 
 int main(int argc, char  *argv[]) {
 
@@ -98,16 +118,17 @@ TIMSK0 = (1 << TOIE0);
 
     Cor__acc_out acc,out;
 
+
     a=micros();
 
     
     // inputDriver(&blocked,&leftOut,&rightOut,&centreOut);
-
-    Cor__acc_step(blocked,leftOut,rightOut,centreOut, &out);
+  actDriver2();
+    // Cor__acc_step(blocked,leftOut,rightOut,centreOut, &out);
     // outputDriver(&acc);
     // _delay_ms(200);
     b=micros();
-    c=(b-a)/1000;
+    c=(b-a);
     lcd_print(1, 1, c, 5);
 
 

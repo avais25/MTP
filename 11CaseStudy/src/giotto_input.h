@@ -1,11 +1,11 @@
 #include "fblib/firebird.h"
 #include "cor_c/cor.h"
-//task function definition
-//driver will be associated with these tasks which 
-//will provide value to the arguments
+#include "rightO_c/rightO.h"
 
 
 Cor__acc_out *_out;
+
+RightO__rightO_out *_out2;
 
 void Cor__acc_step(float blocked, float leftOut, float rightOut, float centreOut,
                    float *lw,float *rw) {
@@ -107,6 +107,42 @@ void Cor__acc_step(float blocked, float leftOut, float rightOut, float centreOut
 
   *lw = _out->wheelLeft;
   *rw = _out->wheelRight;
+}
+
+void RightO__rightO_step(float rf, float rb, float *blocked) {
+  
+  int v_2;
+  int v_1;
+  int v;
+  v_1 = (rb>100);
+  v = (rf>150);
+  v_2 = (v&&v_1);
+  if (v_2) {
+    _out2->rightBlocked = 0;
+  } else {
+    _out2->rightBlocked = 1;
+  };;
+
+  *blocked = _out2->rightBlocked;
+}
+
+void inputDriver2(float *rightF,float *rightB) {
+
+  *rightF = ADC_Conversion(7);
+print_sensor(1,8,7);
+  
+  *rightB = ADC_Conversion(8);
+print_sensor(2,8,8);
+}
+
+
+void actDriver2() {
+    if(_out2->rightBlocked == 0)
+    {
+    buzzer_on();
+    // print_sensor(2,1,123);
+    buzzer_off();
+    }
 }
 
 

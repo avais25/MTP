@@ -3,42 +3,53 @@
         {"name" : "bl" , "type" : "float"},
         {"name" : "le" , "type" : "float"},
         {"name" : "ri" , "type" : "float"},
-        {"name" : "cn" , "type" : "float"}
+        {"name" : "cn" , "type" : "float"},
+        {"name" : "rf" , "type" : "float"},
+        {"name" : "rb" , "type" : "float"}
     ],
 
     "actuator" : [
-        {"name" : "act" , "type" : "float" , "init" : "0"}
+        {"name" : "wheel" , "type" : "float" , "init" : "0"},
+        {"name" : "buzzer" , "type" : "float" , "init" : "0"}
     ],
     
     "input" : [
             {"name" : "bli" , "type" : "float"},
             {"name" : "lei" , "type" : "float"},
             {"name" : "rii" , "type" : "float"},
-            {"name" : "cni" , "type" : "float"}
+            {"name" : "cni" , "type" : "float"},
+            {"name" : "rfi" , "type" : "float"},
+            {"name" : "rbi" , "type" : "float"}
     ],
 
     "output" : [
         {"name" : "lw", "type" : "float" , "init": "0"},
-        {"name" : "rw", "type" : "float" , "init": "0"}
+        {"name" : "rw", "type" : "float" , "init": "0"},
+        {"name" : "rBlk", "type" : "float" , "init": "0"}
     ],
 
     "private" : [
     ],
 
     "task" : [
-        {"name" : "t1", "input" : ["bli","lei","rii","cni"] , "output": ["lw","rw"], "function":"Cor__acc_step", "wcet":"0.1" }
+        {"name" : "t1", "input" : ["bli","lei","rii","cni"] , "output": ["lw","rw"], "function":"Cor__acc_step", "wcet":"0.1" },
+        {"name" : "t2", "input" : ["rfi","rbi"] , "output": ["rBlk"], "function":"RightO__rightO_step", "wcet":"0.1" }
     ],
 
     "driver" : [
         {"name" : "input_t1", "input" : ["bl","le","ri","cn"] , "output": ["bli","lei","rii","cni"], "function":"inputDriver", "wcet":"0.300" },
-        {"name" : "actuation", "input" : ["lw","rw"] , "output": ["act"], "function":"actDriver", "wcet":"0.100" }
+        {"name" : "input_t2", "input" : [] , "output": ["rf","rb"], "function":"inputDriver2", "wcet":"0.100" },
+        {"name" : "actuation", "input" : ["lw","rw"] , "output": ["wheel"], "function":"actDriver", "wcet":"0.100" },
+        {"name" : "actuation2", "input" : ["rBlk"] , "output": ["buzzer"], "function":"actDriver2", "wcet":"0.100" }
 
     ],
 
     "mode" : [
-        {"name" : "m1", "period" : "4" ,  "definition":[
-            {"type": "sensor", "frequency": "2", "task": "t1", "driver": "input_t1"},
-            {"type": "actuator", "frequency": "2", "driver": "actuation"}
+        {"name" : "m1", "period" : "2" ,  "definition":[
+            {"type": "sensor", "frequency": "1", "task": "t1", "driver": "input_t1"},
+            {"type": "actuator", "frequency": "1", "driver": "actuation"},
+            {"type": "sensor", "frequency": "2", "task": "t2", "driver": "input_t2"},
+            {"type": "actuator", "frequency": "2", "driver": "actuation2"}
         ]}
         ],
     "jitter" : "1"
