@@ -3,44 +3,44 @@ volatile unsigned int schedule = 0;
 volatile unsigned int isr_schedule = 0; 
 int main(int argc, char *argv[]) { 
 init_devices(); 
-// TCCR4A = 0 ;
-// TCCR4B = (1 << CS00) | (1 << CS01); 
-// TIMSK4 = (1 << OCIE4A); 
-// OCR4A = 330; 
-schedule=0; 
-isr_schedule = 0; 
+TCCR4A = 0 ;
+TCCR4B = (1 << CS00) | (1 << CS01); 
+TIMSK4 = (1 << OCIE4A); 
+OCR4A = 330; 
+schedule=1; 
+isr_schedule = 1; 
 while(1) { 
 switch (schedule) { 
 case 0: 
-schedule = 0;
-// break;
-// case 1: 
+// schedule = 0;
+break;
+case 1: 
 input_t1();
 schedule = 0;
-// break;
-// case 2: 
+break;
+case 2: 
 input_t2();
 t1();
 t2();
 schedule = 0;
-// break;
-// case 3: 
+break;
+case 3: 
 actuation2();
 schedule = 0;
-// break;
-// case 4: 
+break;
+case 4: 
 input_t2();
 t2();
 schedule = 0;
-// break;
-// case 5: 
+break;
+case 5: 
 actuation();
 schedule = 0;
-// break;
-// case 6: 
+break;
+case 6: 
 actuation2();
 schedule = 0;
-// break;
+break;
 }} 
 return 0; 
 } 

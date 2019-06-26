@@ -101,7 +101,7 @@ if(satisfy == "sat\n"):
     # if first thing to be scheduled is not a sensor or actuator
     # we have to make a first case
     if interruptDict['0'] != 100:
-        mainx.append("schedule = 0; \n")
+        # mainx.append("schedule = 0; \n")
         mainx.append("break;\n")
         mainx.append("case "+str(caseCount)+ ": \n")
         caseCount +=1
