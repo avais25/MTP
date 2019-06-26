@@ -126,23 +126,29 @@ void RightO__rightO_step(float rf, float rb, float *blocked) {
   *blocked = _out2->rightBlocked;
 }
 
-void inputDriver2(float *rightF,float *rightB) {
+void inputDriver2(float *rightF,float *rightB,float *rfi,float *rbi) {
 
   *rightF = ADC_Conversion(7);
-print_sensor(1,8,7);
+  *rfi=*rightF;
+// print_sensor(1,8,7);
   
   *rightB = ADC_Conversion(8);
-print_sensor(2,8,8);
+  *rbi=*rightB;
+// print_sensor(2,8,8);
 }
 
 
-void actDriver2() {
-    if(_out2->rightBlocked == 0)
+void actDriver2(float rBlk, float *bzr) {
+    if(rBlk == 0)
     {
     buzzer_on();
-    // print_sensor(2,1,123);
-    buzzer_off();
     }
+    else
+    {
+      buzzer_off();
+    }
+    
+    //  print_sensor(2,1,rBlk);
 }
 
 
@@ -185,6 +191,8 @@ void inputDriver(float *Front_Sharp_Sensor,float *Left_white_line,float *Right_w
   *Right_white_line = ADC_Conversion(1);	//Getting data of Right WL Sensor
 
   *Front_Sharp_Sensor = ADC_Conversion(11);
+
+  // print_sensor(2,4,11);
 
   if (*Front_Sharp_Sensor > 150)
   *blocked=1;

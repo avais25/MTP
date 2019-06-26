@@ -31,7 +31,7 @@ inputDriver(&bl,&le,&ri,&cn,&bli,&lei,&rii,&cni);
 }
 
 void input_t2(){
-inputDriver2(&rf,&rb);
+inputDriver2(&rf,&rb,&rfi,&rbi);
 }
 
 void actuation(){

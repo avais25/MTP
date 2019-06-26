@@ -1,10 +1,10 @@
 sat
-[input_t2_1 = 11/10,
- t1_0 = 3/10,
- input_t2_0 = 2/5,
- actuation2_0 = 3/5,
- t2_0 = 1/2,
- actuation_0 = 1,
- actuation2_1 = 13/10,
- t2_1 = 6/5,
+[input_t2_1 = 8,
+ t1_0 = 3/2,
+ input_t2_0 = 1,
+ actuation2_0 = 6,
+ t2_0 = 7/2,
+ actuation_0 = 14,
+ actuation2_1 = 15,
+ t2_1 = 17/2,
  input_t1_0 = 0]
